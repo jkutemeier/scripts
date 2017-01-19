@@ -28,9 +28,11 @@ DEFINE_string getbinpkgver "" \
   "Use binary packages from a specific version."
 DEFINE_boolean enable_rootfs_verification ${FLAGS_TRUE} \
   "Default all bootloaders to use kernel-based root fs integrity checking."
-DEFINE_string base_pkg "coreos-base/coreos" \
+DEFINE_boolean enable_verity ${FLAGS_TRUE} \
+  "Default GRUB to use dm-verity-enabled boot arguments"
+DEFINE_string base_pkg "coreos-base/coreos-desktop" \
   "The base portage package to base the build off of (only applies to prod images)"
-DEFINE_string base_dev_pkg "coreos-base/coreos-dev" \
+DEFINE_string base_dev_pkg "coreos-base/coreos-desktop-dev" \
   "The base portage package to base the build off of (only applies to dev images)"
 DEFINE_string output_root "${DEFAULT_BUILD_ROOT}/images" \
   "Directory in which to place image result directories (named by version)"
