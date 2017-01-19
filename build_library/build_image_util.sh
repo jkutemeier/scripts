@@ -197,7 +197,7 @@ write_contents() {
 # Generate a list of packages installed in an image.
 # Usage: image_packages /image/root
 image_packages() {
-    local profile="${BUILD_DIR}/configroot/etc/portage/profile"    
+    local profile="${BUILD_DIR}/configroot/etc/portage/profile"
     ROOT="$1" PORTAGE_CONFIGROOT="${BUILD_DIR}"/configroot \
         equery --no-color list --format '$cpv::$repo' '*'
     # We also want to list packages that only exist in the initramfs.
@@ -245,7 +245,7 @@ write_licenses() {
 
 # Add an entry to the image's package.provided
 package_provided() {
-    local p profile="${BUILD_DIR}/configroot/etc/portage/profile"    
+    local p profile="${BUILD_DIR}/configroot/etc/portage/profile"
     for p in "$@"; do
         info "Writing $p to package.provided and soname.provided"
         echo "$p" >> "${profile}/package.provided"
@@ -365,7 +365,7 @@ finish_image() {
   fi
 
   # Build the selinux policy
-  if pkg_use_enabled coreos-base/coreos selinux; then
+  if pkg_use_enabled coreos-base/coreos-desktop selinux; then
       sudo chroot "${root_fs_dir}" bash -c "cd /usr/share/selinux/mcs && semodule -s mcs -i *.pp"
   fi
 
