@@ -266,11 +266,30 @@ PORTAGE_BINHOST="${BOARD_BINHOST}"
 # You can use --select to override this.
 EMERGE_DEFAULT_OPTS="--oneshot"
 
+VIDEO_CARDS="intel i965"
+
 # Allow the user to override or define additional settings.
 source "${BOARD_ETC}/portage/make.conf.user"
 EOF
 
 sudo cp /etc/portage/repos.conf/* "${BOARD_ETC}"/portage/repos.conf/
+
+sudo_clobber "${BOARD_ROOT}/etc/portage/package.use/media-libs" <<EOF
+media-libs/mesa xa
+EOF
+
+sudo_clobber "${BOARD_ROOT}/etc/portage/package.use/sys-devel" <<EOF
+sys-devel/llvm llvm_targets_X86
+EOF
+
+sudo_clobber "${BOARD_ROOT}/etc/portage/package.use/x11-base" <<EOF
+x11-base/xorg-drivers input_devices_evdev input_devices_synaptics video_cards_intel video_cards_nouveau video_cards_nvidia video_cards_radeon video_cards_vmware video_cards_virtualbox
+x11-base/xorg-server glamor xorg !wayland
+EOF
+
+sudo_clobber "${BOARD_ROOT}/etc/portage/package.use/x11-libs" <<EOF
+x11-libs/libdrm libkms video_cards_nouveau video_cards_vmware video_cards_radeon
+EOF
 
 # required when using --regen_configs_only
 sudo mkdir -p --mode=01777 "${BOARD_ROOT}"{/tmp,/var/tmp}
